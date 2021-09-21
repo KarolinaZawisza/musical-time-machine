@@ -13,7 +13,7 @@ class SpotifyModule:
         sp = spotipy.Spotify(auth_manager=SpotifyOAuth(client_id=self.client_id,
                                                        client_secret=self.client_secret,
                                                        redirect_uri=self.uri,
-                                                       scope="playlist-modify-private",
+                                                       scope="playlist-modify-public",
                                                        show_dialog=True,
                                                        cache_path="token.txt"
                                                        ))
@@ -21,8 +21,9 @@ class SpotifyModule:
 
     @staticmethod
     def create_playlist(user_id, spotify, date):
-        spotify.user_playlist_create(user=user_id, name=f'Musical Time Machine {date}')
+        playlist = spotify.user_playlist_create(user=user_id, name=f"Musical Time Machine: {date}", public=True)
+        return playlist
 
     @staticmethod
-    def add_tracks_to_playlist(spotify, user_id, playlist_id, tracks):
-        spotify.user_playlist_add_tracks(user=user_id, playlist_id=playlist_id, tracks=tracks, position=None)
+    def add_tracks_to_playlist(spotify, song_uris, playlist):
+        spotify.playlist_add_items(playlist_id=playlist["id"], items=song_uris, position=None)
