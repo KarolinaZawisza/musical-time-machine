@@ -22,6 +22,15 @@ spotify = SpotifyModule(CLIENT_ID, CLIENT_SECRET, URI)
 spotify_auth = spotify.authenticate_spotify()
 user_id = spotify_auth.current_user()['id']
 
-song = spotify_auth.search(q='track:' + songs_titles[0], type='track')
-song_id = song['tracks']['items'][0]['album']['id']
+song_uris = []
+for song in songs_titles:
+    result = spotify_auth.search(q='track:' + song, type='track')
+    try:
+        uri = result['tracks']['items'][0]['album']['uri']
+        print(uri)
+        song_uris.append(uri)
+    except IndexError:
+        print(f"{song} doesn't exist in Spotify. Skipped.")
+
+print(song_uris)
 
