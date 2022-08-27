@@ -3,7 +3,9 @@ from spotipy import SpotifyOAuth
 from user_utils import UserUtils
 from data_manager import DataManager
 from spotify_module import SpotifyModule
-from envr import CLIENT_SECRET, CLIENT_ID
+# from envr import CLIENT_SECRET, CLIENT_ID
+CLIENT_SECRET = ""
+CLIENT_ID = ""
 
 URL = 'https://www.billboard.com/charts/hot-100'
 date = UserUtils.get_date_from_user()
